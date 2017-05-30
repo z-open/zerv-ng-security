@@ -1,0 +1,38 @@
+{
+  "name": "zerv-ng-security",
+  "version": "0.0.1",
+  "authors": [
+    "Emmanuel Telmon <etelmon@zimit.io>"
+  ],
+  "description": "This angular enforce security policies in an angular application coonected to a zerv application server",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "security"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "librairies",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "gulpfile.js",
+    "build",
+    "karma.conf.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "~1.5.0",
+    "lodash": "^4.0.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.5.0"
+  },
+  "main": [
+    "dist/zerv-security.js"
+  ]
+}
