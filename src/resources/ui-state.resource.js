@@ -1,5 +1,5 @@
-angular.module('zimit.security')
-    .factory('uiStateResource', function($rootScope, $state, $timeout, securityService) {
+angular.module('zerv.security')
+    .factory('uiStateResource', function($rootScope, $state, $timeout, $security) {
 
         var deniedStates = [];
 

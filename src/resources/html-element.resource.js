@@ -1,5 +1,5 @@
-angular.module('zimit.security')
-    .factory('htmlElementResource', function(securityService) {
+angular.module('zerv.security')
+    .factory('htmlElementResource', function($security) {
         return {
             target: 'dom',
             apply: function applyToHtmlElement(element, setting) {

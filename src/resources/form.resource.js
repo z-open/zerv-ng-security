@@ -5,8 +5,8 @@
  *
  *
  */
-angular.module('zimit.security')
-    .factory('formResource', function(securityService) {
+angular.module('zerv.security')
+    .factory('formResource', function($security) {
 
         return {
             target: 'dom',

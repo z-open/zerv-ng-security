@@ -1,9 +1,8 @@
-angular.module('zimit.security')
+angular.module('zerv.security')
     .config(['$provide', '$injector', function($provide, $injector) {
 
     }])
-    .run(function(securityService) { })
-    .factory('securityService', function($q, $state, $sync, sessionUser, $injector, domSecurityService) {
+    .factory('$security', function($q, $state, $sync, sessionUser, $injector, domSecurityService) {
 
         var userPolicy,
             excludedDomElements = [];
