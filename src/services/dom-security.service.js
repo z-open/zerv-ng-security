@@ -106,13 +106,14 @@ angular.module('zerv.security')
         function digestDom() {
             const elementsUnderPolicy = protectedResources ? findDomElementsWhichAreProtectedResources() : [];
 
-            if (elementsUnderPolicy.length === 0) {
-                // console.debug('No DOM elements are covered by the policy.');
-            } else {
+            if (elementsUnderPolicy.length) {
                 elementsUnderPolicy.forEach(function(protectedElement) {
                     applyPoliciesToProtectedElement(protectedElement.element, protectedElement.resource);
                 });
-            }
+            } 
+            // else {
+            // console.debug('No DOM elements are covered by the policy.');
+            // }
         }
 
 

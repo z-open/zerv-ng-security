@@ -7,7 +7,7 @@ angular.module('zerv.security')
         const excludedDomElements = [];
 
         subscribeToPolicy()
-            .waitForDataReady().then(function(data) {
+            .then(function(data) {
                 domSecurityService.observeDomChanges(excludedDomElements);
             });
 
@@ -35,7 +35,6 @@ angular.module('zerv.security')
             return $sync.subscribe(
                 'security.sync')
                 .setSingle(true)
-
                 .setOnReady(function(securityData) {
                     /* eslint-disable no-undef */
                     userPolicy = new UserPolicy(securityData, getPolicyConditionFactory, getResourceTypeFactory);
@@ -43,7 +42,7 @@ angular.module('zerv.security')
                     applyPoliciesToUiRouterRelatedProtectedResources(userPolicy.getProtectedResourcesByTarget('uiRouter'));
                     domSecurityService.applyPolicies(userPolicy.getProtectedResourcesByTarget('dom'));
                 })
-                .syncOn();
+                .waitForDataReady();
         }
 
         /**
@@ -78,7 +77,7 @@ angular.module('zerv.security')
 
 
         /**
-         * Policy have settings that might be based conditions. This condition must return true in order to make the policy effective.
+         * Policies have settings that might be based conditions. This condition must return true in order to make the policy effective.
          * If a policy is effective, the status of protected resources listed under a policy setting will be applied. 
          *
          * Condition are organized in security group.
