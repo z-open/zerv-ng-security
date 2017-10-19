@@ -3,9 +3,8 @@ angular.module('zerv.security')
 
     }])
     .factory('$security', function($q, $state, $sync, sessionUser, $injector, domSecurityService) {
-
-        var userPolicy,
-            excludedDomElements = [];
+        let userPolicy;
+        const excludedDomElements = [];
 
         subscribeToPolicy()
             .waitForDataReady().then(function(data) {
@@ -14,7 +13,7 @@ angular.module('zerv.security')
 
         return {
             getNgData: domSecurityService.getNgData,
-            addExcludedDirective: addExcludedDirective
+            addExcludedDirective: addExcludedDirective,
         };
 
         /**
@@ -30,7 +29,7 @@ angular.module('zerv.security')
         }
 
 
-        ///////////////////////////////////////////        
+        // /////////////////////////////////////////        
 
         function subscribeToPolicy() {
             return $sync.subscribe(
@@ -57,13 +56,12 @@ angular.module('zerv.security')
                 });
             } else {
                 // Hack...remove protection (admin role does not have protected resources)
-                getResourceTypeFactory({name:'uiState'}).clear();
+                getResourceTypeFactory({name: 'uiState'}).clear();
             }
         }
 
 
-
-        /***
+        /** *
          * Based on their type, resource have different ways of applying policing.
          *
          * Ex: htmlElement might hide or show, while uiState resource might allow or deny a state.
@@ -99,8 +97,6 @@ angular.module('zerv.security')
         function getPolicyConditionFactory(factoryName) {
             return $injector.get(factoryName + 'Security');
         }
-
     });
-
 
 

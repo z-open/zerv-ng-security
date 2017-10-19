@@ -1,7 +1,6 @@
 angular.module('zerv.security')
     .factory('uiStateResource', function($rootScope, $state, $timeout, $security) {
-
-        var deniedStates = [];
+        let deniedStates = [];
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
             // console.log(toState.parent);
@@ -21,7 +20,7 @@ angular.module('zerv.security')
 
         $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams) {
-                var denied = _.find(deniedStates, function(deniedState) {
+                const denied = _.find(deniedStates, function(deniedState) {
                     return $state.includes(deniedState.stateName);
                 });
                 if (denied) {
@@ -36,7 +35,7 @@ angular.module('zerv.security')
                 deniedStates.length = 0;
             },
             apply: function applyToStateChange(stateName, setting) {
-                var denied = _.find(deniedStates, function(denied) {
+                let denied = _.find(deniedStates, function(denied) {
                     return denied.stateName === stateName;
                 });
                 if (!denied) {
@@ -44,7 +43,7 @@ angular.module('zerv.security')
                         denied = {
                             stateName: stateName,
                             value: setting.value,
-                            redirect: setting.redirect
+                            redirect: setting.redirect,
                         };
                         deniedStates.push(denied);
 
@@ -57,14 +56,13 @@ angular.module('zerv.security')
                         return denied.stateName === stateName;
                     });
                 }
-            }
+            },
         };
 
-        //////////////////////////
+        // ////////////////////////
         function redirect(denied) {
-            var newState = denied.redirect || '/';
+            const newState = denied.redirect || '/';
             console.debug('State [' + denied.stateName + '] is denied by policy. Redirected to ' + newState);
             return $state.go(newState);
         }
-
     });

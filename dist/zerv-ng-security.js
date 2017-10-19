@@ -17,7 +17,6 @@ angular
  */
 angular.module('zerv.security')
     .factory('formResource', ["$security", function($security) {
-
         return {
             target: 'dom',
             apply: function applyToHtmlElement(element, setting) {
@@ -26,7 +25,7 @@ angular.module('zerv.security')
                 } else {
                     element.prop('disabled', false);
                 }
-            }
+            },
         };
     }]);
 }());
@@ -44,7 +43,7 @@ angular.module('zerv.security')
                 } else {
                     element.removeClass('z-policy-hide');
                 }
-            }
+            },
         };
     }]);
 }());
@@ -63,9 +62,8 @@ angular.module('zerv.security')
                     // ngModelController.$setViewValue("10");
                 } else {
                     element.prop('disabled', false);
-
                 }
-            }
+            },
         };
     }]);
 }());
@@ -75,8 +73,7 @@ angular.module('zerv.security')
 
 angular.module('zerv.security')
     .factory('uiStateResource', ["$rootScope", "$state", "$timeout", "$security", function($rootScope, $state, $timeout, $security) {
-
-        var deniedStates = [];
+        let deniedStates = [];
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
             // console.log(toState.parent);
@@ -96,7 +93,7 @@ angular.module('zerv.security')
 
         $rootScope.$on('$stateChangeSuccess',
             function(event, toState, toParams, fromState, fromParams) {
-                var denied = _.find(deniedStates, function(deniedState) {
+                const denied = _.find(deniedStates, function(deniedState) {
                     return $state.includes(deniedState.stateName);
                 });
                 if (denied) {
@@ -111,7 +108,7 @@ angular.module('zerv.security')
                 deniedStates.length = 0;
             },
             apply: function applyToStateChange(stateName, setting) {
-                var denied = _.find(deniedStates, function(denied) {
+                let denied = _.find(deniedStates, function(denied) {
                     return denied.stateName === stateName;
                 });
                 if (!denied) {
@@ -119,7 +116,7 @@ angular.module('zerv.security')
                         denied = {
                             stateName: stateName,
                             value: setting.value,
-                            redirect: setting.redirect
+                            redirect: setting.redirect,
                         };
                         deniedStates.push(denied);
 
@@ -132,16 +129,15 @@ angular.module('zerv.security')
                         return denied.stateName === stateName;
                     });
                 }
-            }
+            },
         };
 
-        //////////////////////////
+        // ////////////////////////
         function redirect(denied) {
-            var newState = denied.redirect || '/';
+            const newState = denied.redirect || '/';
             console.debug('State [' + denied.stateName + '] is denied by policy. Redirected to ' + newState);
             return $state.go(newState);
         }
-
     }]);
 }());
 
@@ -153,21 +149,19 @@ angular.module('zerv.security')
 
     }])
     .factory('domSecurityService', ["$q", "$state", "$sync", "sessionUser", "$injector", function($q, $state, $sync, sessionUser, $injector) {
-
-        var protectedResources;
+        let protectedResources;
 
         // --- performance indicators ----
-        var checkCount = 0, maxCheckCount = 0;
-        var timeoutId;
+        let checkCount = 0, maxCheckCount = 0;
+        let timeoutId;
         // ------------------------------
 
         return {
             getNgData: getNgData,
             observeDomChanges: observeDomChanges,
             applyPolicies: applyPolicies,
-            digestDom: digestDom
+            digestDom: digestDom,
         };
-
 
 
         /**
@@ -179,7 +173,7 @@ angular.module('zerv.security')
          * @returns the object stored in the element data or throw an exception if the key is not present as expected.
          *  */
         function getNgData(dataName, element, config) {
-            var data = element.data(dataName);
+            const data = element.data(dataName);
             if (!data) {
                 throw new Error('Element located at ' + config.resource.locator + ' is not a protected resource of type ' + config.resource.type + '. Missing ' + dataName);
             }
@@ -187,17 +181,15 @@ angular.module('zerv.security')
         }
 
 
-
         /**
           * Initialize DOM Observation and run 'digest dom'' task on specific DOM changes.
           */
         function observeDomChanges(excludedElementNames) {
-            var observer = new MutationObserver(function(mutations) {
-                var elementChanged = false;
-                var classChanged = false;
+            const observer = new MutationObserver(function(mutations) {
+                let elementChanged = false;
+                let classChanged = false;
 
-                var excludedElements = findAllExcludedElements(excludedElementNames);
-
+                const excludedElements = findAllExcludedElements(excludedElementNames);
 
 
                 mutations.forEach(function(mutation) {
@@ -211,7 +203,7 @@ angular.module('zerv.security')
                         //
                         // 
 
-                        var nodesToCheck = concatNodes(mutation.target, mutation.addedNodes);
+                        const nodesToCheck = concatNodes(mutation.target, mutation.addedNodes);
                         if (_.some(nodesToCheck,
                             function(node) {
                                 return checkIfNodeNeedsSecurityCheck(node, excludedElements);
@@ -219,7 +211,6 @@ angular.module('zerv.security')
                             // nodesToCheck.forEach(console.log);
                             elementChanged = true;
                         }
-
                     } else if (mutation.type === 'attributes' &&
                         mutation.attributeName === 'class' &&
                         checkIfNodeNeedsSecurityCheck(mutation.target, excludedElements)) {
@@ -233,14 +224,12 @@ angular.module('zerv.security')
                     checkCount++;
                 }
 
-                //for performance evaluation purposes
+                // for performance evaluation purposes
                 measureCheckCountBeforeStabilization();
-
             });
 
-            observer.observe(document, { attributes: true, childList: true, subtree: true });
+            observer.observe(document, {attributes: true, childList: true, subtree: true});
         }
-
 
 
         /**
@@ -261,64 +250,57 @@ angular.module('zerv.security')
          *
          */
         function digestDom() {
-
-            var elementsUnderPolicy = protectedResources ? findDomElementsWhichAreProtectedResources() : [];
+            const elementsUnderPolicy = protectedResources ? findDomElementsWhichAreProtectedResources() : [];
 
             if (elementsUnderPolicy.length === 0) {
-                //console.debug('No DOM elements are covered by the policy.');
+                // console.debug('No DOM elements are covered by the policy.');
             } else {
                 elementsUnderPolicy.forEach(function(protectedElement) {
                     applyPoliciesToProtectedElement(protectedElement.element, protectedElement.resource);
                 });
-
             }
         }
 
 
-
-        ///////////////////////////////////////////  
+        // /////////////////////////////////////////  
 
 
         function applyPoliciesToProtectedElement(element, protectedResource) {
+            const setting = protectedResource.calculateSetting(); // computeResourceSetting(protectedElement.resource);
 
-            var setting = protectedResource.calculateSetting(); //computeResourceSetting(protectedElement.resource);
-
-            var currentState = element.data('policy');
+            const currentState = element.data('policy');
             // Has the policy changed?
             // instead of storing the setting...should store the revision number
             // because a setting might not have changed but the configuration for that setting might have changed?  ex: disabled htmt-element class param was grey-disable to white-disable... 
             // Currently we use the sync...but if we use the claim...we should keep the revision number there too!!
 
-            if (setting !== currentState) {
+            if (setting.value !== (currentState ? currentState.value : null)) {
                 console.debug('Apply policy to [' + protectedResource.resource.name + '] ->' + JSON.stringify(setting));
                 // console.debug(element.data());
                 protectedResource.apply(element, setting);
-                element.data('policy', protectedResource.setting);
+                element.data('policy', setting);
             }
-            else {
- //               console.debug('policy already applied to [' + protectedResource.resource.name + ']');
-            }
+            // else {
+            //     console.debug('policy already applied to [' + protectedResource.resource.name + ']');
+            // }
         }
 
 
-
         function findDomElementsWhichAreProtectedResources() {
-            var protectedElements = [];
+            const protectedElements = [];
             protectedResources.forEach(function(protectedResource) {
-                var elements = $(protectedResource.resource.locator);
+                const elements = $(protectedResource.resource.locator);
                 if (elements.length > 0) {
-                    for (var n = 0; n < elements.length; n++) {
+                    for (let n = 0; n < elements.length; n++) {
                         protectedElements.push({
                             element: elements.eq(n),
-                            resource: protectedResource
+                            resource: protectedResource,
                         });
                     }
                 }
             });
             return protectedElements;
         }
-
-
 
 
         /**
@@ -363,9 +345,9 @@ angular.module('zerv.security')
          * 
          */
         function findAllExcludedElements(elementNames) {
-            var elements = [];
+            const elements = [];
             _.forEach(elementNames, function(name) {
-                var list = document.getElementsByTagName(name);
+                const list = document.getElementsByTagName(name);
                 _.forEach(list, function(el) {
                     elements.push(el);
                 });
@@ -374,15 +356,14 @@ angular.module('zerv.security')
         }
 
         function concatNodes(node, nodes) {
-            var r = [];
+            const r = [];
             if (node) {
                 r.push(node);
             }
-            for (var n = 0; n < nodes.length; n++) {
+            for (let n = 0; n < nodes.length; n++) {
                 r.push(nodes[n]);
             }
             return r;
-
         }
     }]);
 }());
@@ -395,9 +376,8 @@ angular.module('zerv.security')
 
     }])
     .factory('$security', ["$q", "$state", "$sync", "sessionUser", "$injector", "domSecurityService", function($q, $state, $sync, sessionUser, $injector, domSecurityService) {
-
-        var userPolicy,
-            excludedDomElements = [];
+        let userPolicy;
+        const excludedDomElements = [];
 
         subscribeToPolicy()
             .waitForDataReady().then(function(data) {
@@ -406,7 +386,7 @@ angular.module('zerv.security')
 
         return {
             getNgData: domSecurityService.getNgData,
-            addExcludedDirective: addExcludedDirective
+            addExcludedDirective: addExcludedDirective,
         };
 
         /**
@@ -422,7 +402,7 @@ angular.module('zerv.security')
         }
 
 
-        ///////////////////////////////////////////        
+        // /////////////////////////////////////////        
 
         function subscribeToPolicy() {
             return $sync.subscribe(
@@ -449,13 +429,12 @@ angular.module('zerv.security')
                 });
             } else {
                 // Hack...remove protection (admin role does not have protected resources)
-                getResourceTypeFactory({name:'uiState'}).clear();
+                getResourceTypeFactory({name: 'uiState'}).clear();
             }
         }
 
 
-
-        /***
+        /** *
          * Based on their type, resource have different ways of applying policing.
          *
          * Ex: htmlElement might hide or show, while uiState resource might allow or deny a state.
@@ -491,6 +470,5 @@ angular.module('zerv.security')
         function getPolicyConditionFactory(factoryName) {
             return $injector.get(factoryName + 'Security');
         }
-
     }]);
 }());

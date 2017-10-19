@@ -14,47 +14,19 @@ var concat = require('gulp-concat');
 // angular.js annotation for compression (https://www.npmjs.com/package/gulp-ng-annotate)
 var annotate = require('gulp-ng-annotate');
 
-// minification and variable/parameter renaming (https://www.npmjs.com/package/gulp-uglify)
-var uglify = require('gulp-uglify');
-
 // add an IIFE to each file () 
 var iife = require("gulp-iife");
-
-// just prints a filesize of a file (https://www.npmjs.com/package/gulp-filesize)
-var filesize = require('gulp-filesize');
 
 // watches files for changes and reruns tasks (https://www.npmjs.com/package/gulp-watch)
 var watch = require('gulp-watch');
 
-// remove debug statements in the app code (https://www.npmjs.com/package/gulp-strip-debug)
-var stripDebug = require('gulp-strip-debug');
-
 // karma server to run automated unit tests (http://karma-runner.github.io/0.13/index.html)
 var Server = require('karma').Server;
-
-// jscs JS Code Style checker.  (http://jscs.info)
-var jscs = require('gulp-jscs');
-
-// sourcemaps (https://www.npmjs.com/package/gulp-sourcemaps)
-var sourcemaps = require('gulp-sourcemaps');
-
-// gulp-bump (https://www.npmjs.com/package/gulp-bump)
-var bump = require('gulp-bump');
 
 // git-describe (https://www.npmjs.com/package/git-describe)
 var gitDescribe = require('git-describe');
 
-// used for css pre-processing
-var sass = require('gulp-sass');
 
-// used for renaming the css style output to "build.css"
-var rename = require('gulp-rename');
-
-// used for generating font files from svg icons
-var iconfont = require('gulp-iconfont');
-
-// used by gulp-iconfont
-var consolidate = require('gulp-consolidate');
 
 //////////////////////////////////////////////
 // Variables
