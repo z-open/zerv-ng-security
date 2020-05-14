@@ -35,14 +35,8 @@ module.exports = function (config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             // this is necessary since we do not wrap any longer the angular code as it is in the build (in gulp we do it too)
-            'dist/**/*.js': ['wrap']
+            'dist/**/*.js': []
         },
-
-        wrapPreprocessor: {
-            // Example: wrap each file in an IIFE
-            template: '(function () { <%= contents %> })()'
-        },
-
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -66,8 +60,8 @@ module.exports = function (config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
 
         // uncomment this line when debugging unit tests in Chrome:
-        // browsers: ['PhantomJS', 'Chrome'],
-        browsers: ['PhantomJS'],
+        // browsers: ['ChromeHeadless', 'Chrome'],
+        browsers: ['ChromeHeadless'],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits

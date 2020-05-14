@@ -44,9 +44,6 @@ var bump = require('gulp-bump');
 // git-describe (https://www.npmjs.com/package/git-describe)
 var gitDescribe = require('git-describe');
 
-// used for css pre-processing
-var sass = require('gulp-sass');
-
 // used for renaming the css style output to "build.css"
 var rename = require('gulp-rename');
 
