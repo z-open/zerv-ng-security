@@ -7,7 +7,6 @@
  */
 angular.module('zerv.security')
     .factory('formResource', function($security) {
-
         return {
             target: 'dom',
             apply: function applyToHtmlElement(element, setting) {
@@ -16,7 +15,7 @@ angular.module('zerv.security')
                 } else {
                     element.prop('disabled', false);
                 }
-            }
+            },
         };
     });
 

@@ -3,18 +3,17 @@ angular.module('zerv.security')
 
     }])
     .factory('$security', function($q, $state, $sync, sessionUser, $injector, domSecurityService) {
-
-        var userPolicy,
-            excludedDomElements = [];
+        let userPolicy;
+        const excludedDomElements = [];
 
         subscribeToPolicy()
-            .waitForDataReady().then(function(data) {
+            .then(function(data) {
                 domSecurityService.observeDomChanges(excludedDomElements);
             });
 
         return {
             getNgData: domSecurityService.getNgData,
-            addExcludedDirective: addExcludedDirective
+            addExcludedDirective: addExcludedDirective,
         };
 
         /**
@@ -30,13 +29,12 @@ angular.module('zerv.security')
         }
 
 
-        ///////////////////////////////////////////        
+        // /////////////////////////////////////////        
 
         function subscribeToPolicy() {
             return $sync.subscribe(
                 'security.sync')
                 .setSingle(true)
-
                 .setOnReady(function(securityData) {
                     /* eslint-disable no-undef */
                     userPolicy = new UserPolicy(securityData, getPolicyConditionFactory, getResourceTypeFactory);
@@ -44,7 +42,7 @@ angular.module('zerv.security')
                     applyPoliciesToUiRouterRelatedProtectedResources(userPolicy.getProtectedResourcesByTarget('uiRouter'));
                     domSecurityService.applyPolicies(userPolicy.getProtectedResourcesByTarget('dom'));
                 })
-                .syncOn();
+                .waitForDataReady();
         }
 
         /**
@@ -57,13 +55,12 @@ angular.module('zerv.security')
                 });
             } else {
                 // Hack...remove protection (admin role does not have protected resources)
-                getResourceTypeFactory({name:'uiState'}).clear();
+                getResourceTypeFactory({name: 'uiState'}).clear();
             }
         }
 
 
-
-        /***
+        /** *
          * Based on their type, resource have different ways of applying policing.
          *
          * Ex: htmlElement might hide or show, while uiState resource might allow or deny a state.
@@ -80,7 +77,7 @@ angular.module('zerv.security')
 
 
         /**
-         * Policy have settings that might be based conditions. This condition must return true in order to make the policy effective.
+         * Policies have settings that might be based conditions. This condition must return true in order to make the policy effective.
          * If a policy is effective, the status of protected resources listed under a policy setting will be applied. 
          *
          * Condition are organized in security group.
@@ -99,8 +96,6 @@ angular.module('zerv.security')
         function getPolicyConditionFactory(factoryName) {
             return $injector.get(factoryName + 'Security');
         }
-
     });
-
 
 
