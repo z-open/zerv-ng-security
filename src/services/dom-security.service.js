@@ -17,7 +17,6 @@ angular.module('zerv.security')
             digestDom: digestDom,
         };
 
-
         /**
          * get the data related to angular in a dom element.
          *
@@ -111,14 +110,7 @@ angular.module('zerv.security')
                     applyPoliciesToProtectedElement(protectedElement.element, protectedElement.resource);
                 });
             } 
-            // else {
-            // console.debug('No DOM elements are covered by the policy.');
-            // }
         }
-
-
-        // /////////////////////////////////////////  
-
 
         function applyPoliciesToProtectedElement(element, protectedResource) {
             const setting = protectedResource.calculateSetting(); // computeResourceSetting(protectedElement.resource);
@@ -131,15 +123,10 @@ angular.module('zerv.security')
 
             if (setting.value !== (currentState ? currentState.value : null)) {
                 console.debug('Apply policy to [' + protectedResource.resource.name + '] ->' + JSON.stringify(setting));
-                // console.debug(element.data());
                 protectedResource.apply(element, setting);
                 element.data('policy', setting);
             }
-            // else {
-            //     console.debug('policy already applied to [' + protectedResource.resource.name + ']');
-            // }
         }
-
 
         function findDomElementsWhichAreProtectedResources() {
             const protectedElements = [];
@@ -157,7 +144,6 @@ angular.module('zerv.security')
             return protectedElements;
         }
 
-
         /**
          * for performance evaluation purposes
          *
@@ -174,7 +160,6 @@ angular.module('zerv.security')
                 checkCount = 0;
             }, 500);
         }
-
 
         /**
          * Check if the nodes are excluded from the security check
