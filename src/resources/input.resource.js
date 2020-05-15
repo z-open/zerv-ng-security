@@ -9,8 +9,7 @@ angular.module('zerv.security')
                     // ngModelController.$setViewValue("10");
                 } else {
                     element.prop('disabled', false);
-
                 }
-            }
+            },
         };
     });

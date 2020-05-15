@@ -8,6 +8,6 @@ angular.module('zerv.security')
                 } else {
                     element.removeClass('z-policy-hide');
                 }
-            }
+            },
         };
     });
