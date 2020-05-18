@@ -10,7 +10,7 @@
   "dependencies": {
     "angular": "1.7.9",
     "lodash": "4.17.15",
-    "zerv-ng-sync": "z-open/zerv-ng-sync#1.2.9"
+    "zerv-ng-sync": "z-open/zerv-ng-sync#1.2.11"
   },
   "devDependencies": {
     "@babel/core": "7.7.7",
