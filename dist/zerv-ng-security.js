@@ -63,9 +63,9 @@
 "use strict";
 
 (function () {
-  angular.module('zerv.security').factory('uiStateResource', ["$transition", "$state", "$timeout", "$security", function ($transition, $state, $timeout, $security) {
+  angular.module('zerv.security').factory('uiStateResource', ["$transitions", "$state", "$timeout", "$security", function ($transitions, $state, $timeout, $security) {
     var deniedStates = [];
-    $transition.onSuccess({}, function () {
+    $transitions.onSuccess({}, function () {
       var denied = _.find(deniedStates, function (deniedState) {
         return $state.includes(deniedState.stateName);
       });
