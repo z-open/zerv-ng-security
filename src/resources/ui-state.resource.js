@@ -1,8 +1,8 @@
 angular.module('zerv.security')
-    .factory('uiStateResource', function($transition, $state, $timeout, $security) {
+    .factory('uiStateResource', function($transitions, $state, $timeout, $security) {
         let deniedStates = [];
 
-        $transition.onSuccess({}, () => {
+        $transitions.onSuccess({}, () => {
             const denied = _.find(deniedStates, function(deniedState) {
                 return $state.includes(deniedState.stateName);
             });
