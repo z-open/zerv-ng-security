@@ -63,21 +63,9 @@
 "use strict";
 
 (function () {
-  angular.module('zerv.security').factory('uiStateResource', ["$rootScope", "$state", "$timeout", "$security", function ($rootScope, $state, $timeout, $security) {
+  angular.module('zerv.security').factory('uiStateResource', ["$transition", "$state", "$timeout", "$security", function ($transition, $state, $timeout, $security) {
     var deniedStates = [];
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {// console.log(toState.parent);
-      // if (toState.redirectTo) {
-      //     var denied = _.find(deniedStates, function(deniedState) {
-      //         return !!$state.$current.includes[deniedState.resource.locator];
-      //         // return toState.redirectTo.indexOf(deniedState.resource.locator) === 0;
-      //     });
-      //     if (denied) {
-      //         event.preventDefault();
-      //     }
-      //     //$state.go(toState.redirectTo, toParams);
-      // }
-    });
-    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    $transition.onSuccess({}, function () {
       var denied = _.find(deniedStates, function (deniedState) {
         return $state.includes(deniedState.stateName);
       });

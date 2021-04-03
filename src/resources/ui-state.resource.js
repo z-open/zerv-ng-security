@@ -1,32 +1,15 @@
 angular.module('zerv.security')
-    .factory('uiStateResource', function($rootScope, $state, $timeout, $security) {
+    .factory('uiStateResource', function($transition, $state, $timeout, $security) {
         let deniedStates = [];
 
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
-            // console.log(toState.parent);
-
-            // if (toState.redirectTo) {
-            //     var denied = _.find(deniedStates, function(deniedState) {
-            //         return !!$state.$current.includes[deniedState.resource.locator];
-            //         // return toState.redirectTo.indexOf(deniedState.resource.locator) === 0;
-            //     });
-            //     if (denied) {
-            //         event.preventDefault();
-            //     }
-            //     //$state.go(toState.redirectTo, toParams);
-            // }
-        });
-
-
-        $rootScope.$on('$stateChangeSuccess',
-            function(event, toState, toParams, fromState, fromParams) {
-                const denied = _.find(deniedStates, function(deniedState) {
-                    return $state.includes(deniedState.stateName);
-                });
-                if (denied) {
-                    redirect(denied);
-                }
+        $transition.onSuccess({}, () => {
+            const denied = _.find(deniedStates, function(deniedState) {
+                return $state.includes(deniedState.stateName);
             });
+            if (denied) {
+                redirect(denied);
+            }
+        });
 
         return {
             target: 'uiRouter',
