@@ -16,19 +16,6 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            // necessary to make karma work with angular 1.5
-           //  './node_modules/phantomjs-polyfill/bind-polyfill.js',
-           // // 'libraries/bluebird/js/browser/bluebird.core.js',
-           //  'libraries/angular/angular.js',
-           //  'libraries/angular-mocks/angular-mocks.js',
-           //  'libraries/lodash/dist/lodash.js',
-           //  'libraries//simple-uuid/uuid.js',
-           //  'libraries/angular-socketio/dist/angular-socketio.js',
-           //  'sync/sync.module.js',
-           //  'sync/**/*.*.js',
-           //  'test/helpers/**/*.module.js',
-           //  'test/helpers/**/*.*.js',
-           //  'test/specs/**/*.*.js'
            'node_modules/lodash/lodash.js',
            'node_modules/angular/angular.js',
            'node_modules/angular-mocks/angular-mocks.js',
@@ -37,10 +24,19 @@ module.exports = function (config) {
            'src/**/*.spec.js'
         ],
 
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['dots'],
+        // Test results reporter to use:
+        // possible values: 'dots', 'progress', 'verbose', 'coverage'
+        reporters: ['dots', 'coverage'],
+
+        preprocessors: {
+            'dist/**/*.js': ['coverage']
+        },
+
+        coverageReporter: {
+            dir: require('path').join(__dirname, '../coverage'),
+            type: 'text',
+            includeAllSources: true,
+        },
 
         // web server port
         port: 9876,
