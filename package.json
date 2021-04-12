@@ -27,7 +27,8 @@
     "jasmine-core": "3.7.1",
     "karma": "6.3.2",
     "karma-chrome-launcher": "3.1.0",
-    "karma-jasmine": "4.0.1"
+    "karma-jasmine": "4.0.1",
+    "y18n": "3.2.2"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start"
