@@ -2,6 +2,7 @@
 
 describe('Unit testing for auth,', () => {
     let service,
+        $transitionsMock,
         $syncMock,
         sessionUserMock;
 
@@ -22,9 +23,14 @@ describe('Unit testing for auth,', () => {
 
         sessionUserMock = {};
 
+        $transitionsMock = {
+            onSuccess: jasmine.createSpy('onSuccess'),
+        };
+
         // $provide.value('$window', mock);
         $provide.value('$sync', $syncMock);
         $provide.value('sessionUser', sessionUserMock);
+        $provide.value('$transitions', $transitionsMock);
     }));
 
     beforeEach(() => {
@@ -33,7 +39,8 @@ describe('Unit testing for auth,', () => {
         });
     });
 
-    it('decodeToken should retrieve the token payload', () => {
-        expect(1 + 1).toEqual(2);
+    it('should use the new transition on success event callbacks', () => {
+        expect($transitionsMock.onSuccess).toHaveBeenCalledTimes(1);
+        expect($transitionsMock.onSuccess).toHaveBeenCalledWith({}, jasmine.any(Function));
     });
 });
