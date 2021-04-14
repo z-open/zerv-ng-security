@@ -16,32 +16,27 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            // necessary to make karma work with angular 1.5
-            './node_modules/phantomjs-polyfill/bind-polyfill.js',
-           // 'libraries/bluebird/js/browser/bluebird.core.js',
-            'libraries/angular/angular.js',
-            'libraries/angular-mocks/angular-mocks.js',
-            'libraries/lodash/dist/lodash.js',
-            'libraries//simple-uuid/uuid.js',
-            'libraries/angular-socketio/dist/angular-socketio.js',
-            'sync/sync.module.js',
-            'sync/**/*.*.js',
-            'test/helpers/**/*.module.js',
-            'test/helpers/**/*.*.js',
-            'test/specs/**/*.*.js'
+           'node_modules/lodash/lodash.js',
+           'node_modules/angular/angular.js',
+           'node_modules/angular-mocks/angular-mocks.js',
+           'node_modules/@uirouter/angularjs/release/angular-ui-router.js',
+           'dist/**/*.js',
+           'src/**/*.spec.js'
         ],
 
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+        // Test results reporter to use:
+        // possible values: 'dots', 'progress', 'verbose', 'coverage'
+        reporters: ['dots', 'coverage'],
+
         preprocessors: {
-            // this is necessary since we do not wrap any longer the angular code as it is in the build (in gulp we do it too)
-            'dist/**/*.js': []
+            'dist/**/*.js': ['coverage']
         },
 
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['dots'],
+        coverageReporter: {
+            dir: require('path').join(__dirname, '../coverage'),
+            type: 'text',
+            includeAllSources: true,
+        },
 
         // web server port
         port: 9876,

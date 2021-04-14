@@ -6,24 +6,30 @@
   "repository": {
     "url": ""
   },
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
-    "angular": "1.7.9",
+    "angular": "1.8.2",
     "lodash": "4.17.15",
-    "zerv-ng-sync": "z-open/zerv-ng-sync#1.2.11"
+    "zerv-ng-sync": "z-open/zerv-ng-sync#1.2.13"
   },
   "devDependencies": {
     "@babel/core": "7.7.7",
     "@babel/preset-env": "7.7.7",
+    "@uirouter/angularjs": "1.0.29",
+    "angular-mocks": "1.8.2",
     "babel-preset-env": "1.7.0",
-    "eslint": "6.8.0",
-    "eslint-config-google": "0.14.0",
     "gulp": "4.0.2",
     "gulp-babel": "8.0.0",
     "gulp-clean": "0.4.0",
     "gulp-concat": "2.6.0",
     "gulp-iife": "0.4.0",
-    "gulp-ng-annotate": "2.1.0"
+    "gulp-ng-annotate": "2.1.0",
+    "jasmine-core": "3.7.1",
+    "karma": "6.3.2",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-coverage": "2.0.3",
+    "karma-jasmine": "4.0.1",
+    "y18n": "3.2.2"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start"
